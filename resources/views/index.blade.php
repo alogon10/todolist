@@ -37,10 +37,10 @@
         {{$item->created_at}}
       </td>
       <td>
-        <input class="textbox" name="updatetext" type="text" value={{$item->content}}>
+        <input class="textbox" name="taskupdate" type="text" value={{$item->content}}>
       </td>
       <td>
-          <input formaction="/todo/update" class="update" type="submit" value="更新" name="update">
+        <input formaction="/todo/update" class="update" type="submit" value="更新" name="<?php $itemID = $item->id?>">
       </td>
       <td>
         <input formaction="/todo/delete" class="delete" type="submit" value="削除" name="delete">

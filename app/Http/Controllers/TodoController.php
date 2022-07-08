@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Test;
+use App\Models\Task;
 
 class TodoController extends Controller
 {
     public function index()
     {
-        $items = DB::select('select * from tasks');
+
+        $items = Task::all();
         return view('index',['items' => $items]);
     }
+// create method
     public function create(Request $request)
     {   
         $validate_rule = [
@@ -22,22 +25,23 @@ class TodoController extends Controller
             'content' => $request->content,
         ];
         $this->validate($request,$validate_rule);
-        DB::insert('insert into tasks (content) values (:content)', $item);
+        Task::create($item);
         return redirect('/');
     }
+// update method
     public function update(Request $request)
     {
-        $item = [
-            'content' => $request->updatetext,
-            'id' => DB::select('select id from tasks where id=:id')
-        ];
-        DB::update('update tasks set content=:content where id=:id', $item);
+        $item =$request->itemID;
+        $tasks =Task::all();
+
+        Task::where('id',$item)->update($request->taskupdate);
         return redirect('/');
     }
+// remove method
     public function remove(Request $request)
     {
         $param = ['id' => $request->id];
-        DB::delete('delete from authors where id =:id', $param);
+        Task::find($request-id)->delete();
         return redirect('/');
     }
 }
