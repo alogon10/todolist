@@ -31,17 +31,20 @@ class TodoController extends Controller
 // update method
     public function update(Request $request)
     {
-        $item =$request->itemID;
-        $tasks =Task::all();
-
-        Task::where('id',$item)->update($request->taskupdate);
+        $form = $request->all();
+        unset($form['_token']);
+        $item = [
+            'content' => $request->updatetext,
+        ];
+        $items =Task::all();
+        Task::where('id',$request->id)->update($item);
         return redirect('/');
     }
 // remove method
     public function remove(Request $request)
     {
-        $param = ['id' => $request->id];
-        Task::find($request-id)->delete();
+
+        Task::find($request->id)->delete();
         return redirect('/');
     }
 }

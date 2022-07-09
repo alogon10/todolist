@@ -24,6 +24,7 @@
     @csrf
     <input class="input" type="text" name="content" >
     <input class="button" type="submit" value="追加" >
+  </form>
   <table>
     <tr>
       <th>作成日</th>
@@ -36,15 +37,22 @@
       <td>
         {{$item->created_at}}
       </td>
+      <form action="/todo/update" method="POST">
+        @csrf
+        <td>
+          <input class="textbox" name="updatetext" type="text" value={{$item->content}}>
+        </td>
+        <td>
+        <input class="update" type="submit" value="更新" name="ipdate">
+        <input type="hidden" name="id" value={{$item->id}}>
+        </td>
+      </form>
       <td>
-        <input class="textbox" name="taskupdate" type="text" value={{$item->content}}>
-      </td>
-      <td>
-        <input formaction="/todo/update" class="update" type="submit" value="更新" name="<?php $itemID = $item->id?>">
-      </td>
-      <td>
-        <input formaction="/todo/delete" class="delete" type="submit" value="削除" name="delete">
-        </form>
+      <form action="/todo/delete" method="POST">
+        @csrf
+        <input class="delete" type="submit" value="削除" name="delete">
+        <input type="hidden" name="id" value={{$item->id}}>
+      </form>
       </td>
     </tr>
 @endforeach
